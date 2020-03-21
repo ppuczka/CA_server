@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
 
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.backends.openssl import x509
-from cryptography.hazmat.primitives import hashes, serialization
+
 
 # we have to load ca_public_key & ca_private_key form Azure vault, also new file should be able to download
 # or send to request owner
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes, serialization
 
 
 def sign_csr(csr, ca_public_key, ca_private_key, new_filename):
@@ -33,3 +34,5 @@ def sign_csr(csr, ca_public_key, ca_private_key, new_filename):
 
     with open(new_filename, "wb") as keyfile:
         keyfile.write(public_key.public_bytes(serialization.Encoding.PEM))
+        signed_key = keyfile.read()
+    return signed_key

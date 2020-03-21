@@ -1,27 +1,43 @@
-import connexion
-from flask import render_template, Flask, jsonify
+import os
+
+from flask import Flask, jsonify, request
+
+from ca_helpers import sign_csr
 
 app = Flask(__name__)
 
-tasks = [
+info = [
     {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-        'done': False
+        'title': u'CA Server App',
+        'description': 'Sign Your Certificate Signing Request',
     },
     {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web',
-        'done': False
+        'endpoint': '/csr',
+        'action': 'POST',
+        'description': 'Post Your CSR here to receive signed key'
     }
 ]
 
+pk_file = open('/Users/ppuczka/Desktop/Projects_v2/py_cli/ca_priv_key.pem', 'r')
+pub_file = open('/Users/ppuczka/Desktop/Projects_v2/py_cli/ca_pub_key.pem', 'r')
 
-@app.route('/hello', methods=['GET'])
+
+@app.route('/info', methods=['GET'])
 def get_tasks():
-    return jsonify({'tasks': tasks})
+    return jsonify({'App info': info})
+
+
+@app.route('/csr', methods=['POST'])
+def read_csr():
+    private_key = pk_file.read()
+    pk_file.close()
+    public_key = pub_file.read()
+    pub_file.close()
+    csr = request.data
+    file_name = request.headers.get('Filename')
+    signed_csr = sign_csr(csr, public_key, private_key, file_name)
+    print(signed_csr)
+    return signed_csr
 
 
 if __name__ == '__main__':
