@@ -30,4 +30,4 @@ def sign_csr(csr, ca_public_key, ca_private_key, new_filename):
 
     with open(new_filename, "wb") as keyfile:
         keyfile.write(public_key.public_bytes(serialization.Encoding.PEM))
-    return 'CSR signed successfully'
+    return public_key.public_bytes(serialization.Encoding.PEM)
