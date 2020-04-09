@@ -19,10 +19,10 @@ info = [
     }
 ]
 
-ca_public_key_file = open("/Users/ppuczka/Desktop/Projects_v2/py_cli/ca_pub_key.pem", "rb")
+ca_public_key_file = open("keys/ca_pub_key.pem", "rb")
 ca_public_key = x509.load_pem_x509_certificate(ca_public_key_file.read(), default_backend())
 
-ca_private_key_file = open('/Users/ppuczka/Desktop/Projects_v2/py_cli/ca_priv_key.pem', 'rb')
+ca_private_key_file = open('keys/ca_priv_key.pem', 'rb')
 ca_private_key = serialization.load_pem_private_key(ca_private_key_file.read(), "passphrase".encode("utf-8"),
                                                     default_backend())
 
@@ -42,4 +42,4 @@ def ca_sign_csr():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
