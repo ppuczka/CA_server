@@ -1,2 +1,2 @@
 # CA_server
-Simple CA server for learning purposes
+Simple python CA server for learning purposes
