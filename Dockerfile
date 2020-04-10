@@ -5,5 +5,6 @@ RUN apt-get install -y python-pip python-dev build-essential
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
+EXPOSE 5000 2222
 ENTRYPOINT ["python"]
 CMD ["ca_server_app.py"]
