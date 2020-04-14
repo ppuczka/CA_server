@@ -42,4 +42,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-        images: ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}
+        images: azregistrycontainer.azurecr.io/caserver:4cd46143170baf5b814d0bfc734d7d9c14076f53
