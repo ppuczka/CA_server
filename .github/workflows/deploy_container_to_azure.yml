@@ -9,7 +9,8 @@ on: push
 # 2. Change these variables for your configuration:
 env:
   AZURE_WEBAPP_NAME: caserver   # set this to your application's name
-  CONTAINER_REGISTRY: ${{ secrets.REGISTRY_USERNAME }}.azurecr.io   # set secret with Container Registry name
+  AZURE_REGISTRY_NAME: azRegistryContainer
+  CONTAINER_REGISTRY: ${{ env.AZURE_REGISTRY_NAME }}.azurecr.io   # set secret with Container Registry name
   AZURE_RESOURCE_GROUP: container_rg # set this to your Azure Resource group's name - Needed only if you are provisioning the app in the workflow
   AZURE_APP_PLAN: myServicePlan # set this to your App service plan's name - Needed only if you are provisioning the app in the workflow
   
