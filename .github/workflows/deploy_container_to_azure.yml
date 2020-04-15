@@ -1,12 +1,7 @@
 name: Build and deploy Docker app to Azure
 
 on: push
-# CONFIGURATION
-# For help, go to https://github.com/Azure/Actions
-#
-# Set up the following secrets in your repository:
-#   AZURE_CREDENTIALS, REGISTRY_USERNAME, REGISTRY_PASSWORD
-# 2. Change these variables for your configuration:
+
 env:
   AZURE_WEBAPP_NAME: caserver   # set this to your application's name
   AZURE_REGISTRY_NAME: azRegistryContainer
@@ -23,12 +18,6 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS  }}
-#     - name: Azure CLI script to provision a new Web App for Container
-#       uses: azure/CLI@v0-beta
-#       with:
-#         azcliversion: latest
-#         inlineScript: |
-#           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i nginx
     - name: ACR authentication
       uses: azure/docker-login@v1
       with:
@@ -44,4 +33,6 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} --deployment-container-image-name ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }} --docker-registry-server-user ${{ env.AZURE_REGISTRY_NAME }} --docker-registry-server-password ${{ secrets.REGISTRY_PASSWORD }}
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} |
+          --deployment-container-image-name ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }} | 
+          --docker-registry-server-user ${{ env.AZURE_REGISTRY_NAME }} --docker-registry-server-password ${{ secrets.REGISTRY_PASSWORD }}
