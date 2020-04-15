@@ -39,10 +39,9 @@ jobs:
         docker build . -t ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}
         docker push ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}  
     - name: 'Deploy to Azure Web App for Container'   
-      uses: azure/webapps-deploy@v2
-      with: 
-        login-server: ${{ env.CONTAINER_REGISTRY }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}    
-        app-name: ${{ env.AZURE_WEBAPP_NAME }} 
-        images: azregistrycontainer.azurecr.io/caserver:4cd46143170baf5b814d0bfc734d7d9c14076f53
+      uses: azure/CLI@v0-beta      
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} 
+          --deployment-container-image-name ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}
