@@ -33,6 +33,4 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} |
-          --deployment-container-image-name ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }} | 
-          --docker-registry-server-user ${{ env.AZURE_REGISTRY_NAME }} --docker-registry-server-password ${{ secrets.REGISTRY_PASSWORD }}
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} --deployment-container-image-name ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }} --docker-registry-server-user ${{ env.AZURE_REGISTRY_NAME }} --docker-registry-server-password ${{ secrets.REGISTRY_PASSWORD }}
