@@ -22,12 +22,12 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS  }}
-    - name: Azure CLI script to provision a new Web App for Container
-      uses: azure/CLI@v0-beta
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i nginx
+#     - name: Azure CLI script to provision a new Web App for Container
+#       uses: azure/CLI@v0-beta
+#       with:
+#         azcliversion: latest
+#         inlineScript: |
+#           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  -i nginx
     - name: ACR authentication
       uses: azure/docker-login@v1
       with:
@@ -43,5 +43,4 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} 
-          --deployment-container-image-name ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }} --deployment-container-image-name ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}
