@@ -8,4 +8,4 @@ COPY sshd_config /etc/ssh/
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
-ENTRYPOINT ["/usr/bin/supervisord", "-c", "/ca_server/supervisord.conf"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/app/supervisord.conf"]
