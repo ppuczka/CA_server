@@ -26,7 +26,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}    
     - name: Docker Build & Push to ACR
       run: |
-        docker build . -t ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}
+        docker build . -t ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }} --build-arg root_password = ${{ secrets.SSH_ROOT_PASSWORD }}
         docker push ${{ env.CONTAINER_REGISTRY }}/${{env.AZURE_WEBAPP_NAME}}:${{ github.sha }}  
     - name: 'Deploy to Azure Web App for Container'   
       uses: azure/CLI@v0-beta      
