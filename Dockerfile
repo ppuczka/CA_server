@@ -1,9 +1,8 @@
-FROM ubuntu:latest
+FROM ubuntu:bionic
 MAINTAINER P Puczka 'p.puczka@gmail.com'
 ARG root_password
 RUN apt-get update -y
-RUN apt-get install python3 -y
-RUN apt-get -y install python3-pip
+RUN apt-get install -y python-pip python-dev build-essential
 RUN apt-get install -y supervisor
 RUN apt-get install -y supervisor openssh-server
 RUN mkdir /run/sshd
