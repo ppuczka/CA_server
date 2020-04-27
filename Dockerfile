@@ -6,7 +6,7 @@ RUN apt-get install -y python-pip python-dev build-essential
 RUN apt-get install -y supervisor
 RUN apt-get install -y supervisor openssh-server
 RUN mkdir /run/sshd
-RUN echo $root_password  | chpasswd
+RUN echo $root_password  | sudo chpasswd
 COPY . /app
 COPY sshd_config /etc/ssh/
 EXPOSE 80 2222 5555
